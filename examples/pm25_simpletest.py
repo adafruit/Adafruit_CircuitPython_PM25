@@ -16,13 +16,24 @@ reset_pin = None
 # reset_pin.value = False
 
 
-# If using with a computer such as Linux/RaspberryPi, Mac, Windows...
+# For use with a computer running Windows:
 # import serial
-#
 # uart = serial.Serial("COM30", baudrate=9600, timeout=1)
+
+# For use with microcontroller board:
+# (Connect the sensor TX pin to the board/computer RX pin)
+# uart = busio.UART(board.TX, board.RX, baudrate=9600)
+
+# For use with Raspberry Pi/Linux:
+# import serial
+# uart = serial.Serial("/dev/ttyS0", baudrate=9600, timeout=0.25)
+
+# For use with USB-to-serial cable:
+# import serial
+# uart = serial.Serial("/dev/ttyUSB0", baudrate=9600, timeout=0.25)
+
 # Connect to a PM2.5 sensor over UART
 # pm25 = adafruit_pm25.PM25_UART(uart, reset_pin)
-
 
 # Create library object, use 'slow' 100KHz frequency!
 i2c = busio.I2C(board.SCL, board.SDA, frequency=100000)
