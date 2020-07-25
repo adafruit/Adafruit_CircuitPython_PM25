@@ -124,9 +124,9 @@ class PM25_I2C(PM25):
     """
 
     def __init__(self, i2c_bus, reset_pin=None, address=0x12):
-        from adafruit_bus_device.i2c_device import (
-            I2CDevice,
-        )  # pylint: disable=import-outside-toplevel
+        # fmt: off
+        from adafruit_bus_device.i2c_device import I2CDevice # pylint: disable=import-outside-toplevel
+        # fmt: on
 
         if reset_pin:
             # Reset device
