@@ -122,7 +122,7 @@ class PM25_I2C(PM25):
     """
     A driver for the PM2.5 Air quality sensor over I2C
     """
-from adafruit_bus_device.i2c_device import I2CDevice
+    from adafruit_bus_device.i2c_device import I2CDevice
 
     def __init__(self, i2c_bus, reset_pin=None, address=0x12):
         if reset_pin:
