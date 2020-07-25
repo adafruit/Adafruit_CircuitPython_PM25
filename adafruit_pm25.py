@@ -46,7 +46,6 @@ Works with most (any?) Plantower UART or I2C interfaced PM2.5 sensor.
 # imports
 import time
 import struct
-from adafruit_bus_device.i2c_device import I2CDevice
 from digitalio import Direction
 
 __version__ = "0.0.0-auto.0"
@@ -123,6 +122,7 @@ class PM25_I2C(PM25):
     """
     A driver for the PM2.5 Air quality sensor over I2C
     """
+from adafruit_bus_device.i2c_device import I2CDevice
 
     def __init__(self, i2c_bus, reset_pin=None, address=0x12):
         if reset_pin:
