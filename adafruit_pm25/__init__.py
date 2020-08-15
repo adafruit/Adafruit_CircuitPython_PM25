@@ -44,9 +44,7 @@ Works with most (any?) Plantower UART or I2C interfaced PM2.5 sensor.
 """
 
 # imports
-import time
 import struct
-from digitalio import Direction
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PM25.git"
