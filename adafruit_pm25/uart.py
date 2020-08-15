@@ -46,6 +46,7 @@ Works with most (any?) Plantower UART or I2C interfaced PM2.5 sensor.
 # imports
 from . import PM25
 
+
 class PM25_UART(PM25):
     """
     A driver for the PM2.5 Air quality sensor over UART
@@ -68,7 +69,7 @@ class PM25_UART(PM25):
         while True:
             b = self._uart.read(1)
             if not b:
-                print(b) ### <<< debug
+                print(b)  ### <<< debug
                 raise RuntimeError("Unable to read from PM2.5 (no start of frame)")
             if b[0] == 0x42:
                 break

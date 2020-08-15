@@ -48,6 +48,7 @@ import time
 from . import PM25
 from adafruit_bus_device.i2c_device import I2CDevice
 
+
 class PM25_I2C(PM25):
     """
     A driver for the PM2.5 Air quality sensor over I2C
