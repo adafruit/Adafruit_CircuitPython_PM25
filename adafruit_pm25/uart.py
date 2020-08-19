@@ -70,7 +70,6 @@ class PM25_UART(PM25):
         while True:
             b = self._uart.read(1)
             if not b:
-                print(b)  ### <<< debug
                 raise RuntimeError("Unable to read from PM2.5 (no start of frame)")
             if b[0] == 0x42:
                 break
