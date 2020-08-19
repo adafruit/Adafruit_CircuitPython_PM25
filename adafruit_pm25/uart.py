@@ -42,7 +42,6 @@ Works with most (any?) Plantower UART or I2C interfaced PM2.5 sensor.
 
 """
 
-# imports
 import time
 from digitalio import Direction
 from . import PM25
