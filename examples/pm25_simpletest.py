@@ -9,7 +9,6 @@ import busio
 from digitalio import DigitalInOut, Direction, Pull
 from adafruit_pm25.i2c import PM25_I2C
 
-# from adafruit_pm25.uart import PM25_UART
 
 reset_pin = None
 # If you have a GPIO, its not a bad idea to connect it to the RESET pin
@@ -35,6 +34,7 @@ reset_pin = None
 # uart = serial.Serial("/dev/ttyUSB0", baudrate=9600, timeout=0.25)
 
 # Connect to a PM2.5 sensor over UART
+# from adafruit_pm25.uart import PM25_UART
 # pm25 = PM25_UART(uart, reset_pin)
 
 # Create library object, use 'slow' 100KHz frequency!
