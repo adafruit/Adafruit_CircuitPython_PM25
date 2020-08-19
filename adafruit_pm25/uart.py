@@ -23,7 +23,7 @@
 `adafruit_pm25.uart`
 ================================================================================
 
-CircuitPython library for PM2.5 Air Quality Sensors
+UART module for CircuitPython library for PM2.5 Air Quality Sensors
 
 
 * Author(s): ladyada
