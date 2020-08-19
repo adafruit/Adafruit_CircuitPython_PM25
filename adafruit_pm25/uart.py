@@ -39,7 +39,6 @@ Works with most (any?) Plantower UART or I2C interfaced PM2.5 sensor.
 
 * Adafruit CircuitPython firmware for the supported boards:
   https://github.com/adafruit/circuitpython/releases
-* Adafruit's Bus Device library: https://github.com/adafruit/Adafruit_CircuitPython_BusDevice
 
 """
 
