@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 """
-`adafruit_pm25`
+`adafruit_pm25.uart`
 ================================================================================
 
 CircuitPython library for PM2.5 Air Quality Sensors
