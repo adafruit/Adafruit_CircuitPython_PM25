@@ -33,7 +33,7 @@ Implementation Notes
 
 **Hardware:**
 
-Works with most (any?) Plantower UART or I2C interfaced PM2.5 sensor.
+Works with most (any?) Plantower I2C interfaced PM2.5 sensor.
 
 **Software and Dependencies:**
 
