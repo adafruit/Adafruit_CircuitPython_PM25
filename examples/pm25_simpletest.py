@@ -1,5 +1,5 @@
 """
-Example sketch to connect to PM2.5 sensor with I2C.
+Example sketch to connect to PM2.5 sensor with either I2C or UART.
 """
 
 # pylint: disable=unused-import
