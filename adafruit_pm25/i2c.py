@@ -23,7 +23,7 @@
 `adafruit_pm25`
 ================================================================================
 
-CircuitPython library for PM2.5 Air Quality Sensors
+I2C module for CircuitPython library for PM2.5 Air Quality Sensors
 
 
 * Author(s): ladyada
