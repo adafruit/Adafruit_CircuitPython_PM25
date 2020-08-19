@@ -52,7 +52,7 @@ from . import PM25
 
 class PM25_I2C(PM25):
     """
-    A driver for the PM2.5 Air quality sensor over I2C
+    A module for using the PM2.5 Air quality sensor over I2C
     """
 
     def __init__(self, i2c_bus, reset_pin=None, address=0x12):
