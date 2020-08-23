@@ -80,5 +80,5 @@ class PM25_I2C(PM25):
         with self.i2c_device as i2c:
             try:
                 i2c.readinto(self._buffer)
-            except OSError:
-                raise RuntimeError("Unable to read from PM2.5 over I2C")
+            except OSError as err:
+                raise RuntimeError("Unable to read from PM2.5 over I2C") from err
