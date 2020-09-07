@@ -186,3 +186,35 @@ class PM25_UART(PM25):
         for i in range(31):
             self._buffer[i + 1] = remain[i]
         # print([hex(i) for i in self._buffer])
+
+class PM25_UART_PASSIVE(PM25):
+    """
+    A driver for the PM2.5 air quality sensor over UART in passive mode
+    """
+
+    def __init__(self, uart, reset_pin=None, enable_pin=None):
+        # Reset enable pin, if present
+        if enable_pin:
+            enable_pin.direction = Direction.OUTPUT
+            enable_pin.value = False
+            time.sleep(0.1)
+            enable_pin.value = True
+            time.sleep(1)
+
+        if reset_pin:
+            reset_pin.direction = Direction.OUTPUT
+            reset_pin.value = False
+            time.sleep(0.01)
+            reset_pin.value = True
+            time.sleep(1)
+
+        self._uart = uart
+        # Set PM2.5 to passive mode via UART command
+        self._uart.write([66, 77, 225, 0, 0, 1, 112])
+        super().__init__()
+
+    def _read_into_buffer(self):
+        self._uart.flushInput()
+        # Request data from PM2.5 via UART command
+        self._uart.write([66, 77, 226, 0, 0, 1, 113])
+        self._buffer = self._uart.read(32)

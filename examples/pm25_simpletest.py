@@ -35,6 +35,15 @@ reset_pin = None
 # Connect to a PM2.5 sensor over UART
 # pm25 = adafruit_pm25.PM25_UART(uart, reset_pin)
 
+# Connect to a PM2.5 sensor over UART in passive mode on Enviro+ Hat on RPi
+# enable_pin = DigitalInOut(board.D27)
+# enable_pin.direction = Direction.OUTPUT
+# reset_pin = DigitalInOut(board.D22)
+# reset_pin.direction = Direction.OUTPUT
+# import serial
+# uart = serial.Serial("/dev/ttyAMA0", baudrate=9600, stopbits=1, parity="N", timeout=4)
+# pm25 = adafruit_pm25.PM25_UART_PASSIVE(uart, pin)
+
 # Create library object, use 'slow' 100KHz frequency!
 i2c = busio.I2C(board.SCL, board.SDA, frequency=100000)
 # Connect to a PM2.5 sensor over I2C
