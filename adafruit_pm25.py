@@ -169,6 +169,18 @@ class PM25_UART(PM25):
             time.sleep(1)
 
         self._uart = uart
+        # Set PM2.5 to active mode via UART command
+        self._uart.write([0x42, 0x4d, 0xe1, 0x00, 0x01, 0x01, 0x71])
+        # Check mode change response
+        r = self._uart.read(8)
+        if (len(r) == 8) and (r[0] == 0x42) and (r[1] == 0x4d):
+            if sum(r[0:6]) == struct.unpack(">H", r[6:8])[0]:
+                # print("UART active mode configured successfully")
+                time.sleep(0.1)
+            else:
+                raise RuntimeError("Error configuring PM2.5 sensor for active reading, checksum failure on mode change response")
+        else:
+            raise RuntimeError("Error configuring PM2.5 sensor for active reading, malformed mode change response")
         super().__init__()
 
     def _read_into_buffer(self):
@@ -210,11 +222,33 @@ class PM25_UART_PASSIVE(PM25):
 
         self._uart = uart
         # Set PM2.5 to passive mode via UART command
-        self._uart.write([66, 77, 225, 0, 0, 1, 112])
+        self._uart.write([0x42, 0x4d, 0xe1, 0x00, 0x00, 0x01, 0x70])
+        # Check mode change response
+        r = self._uart.read(8)
+        if (len(r) == 8) and (r[0] == 0x42) and (r[1] == 0x4d):
+            if sum(r[0:6]) == struct.unpack(">H", r[6:8])[0]:
+                # print("UART passive mode configured successfully")
+                time.sleep(0.1)
+            else:
+                raise RuntimeError("Error configuring PM2.5 sensor for active reading, checksum failure on mode change response")
+        else:
+            raise RuntimeError("Error configuring PM2.5 sensor for passive reading, malformed mode change response")
+        time.sleep(0.2)
         super().__init__()
 
     def _read_into_buffer(self):
         self._uart.flushInput()
         # Request data from PM2.5 via UART command
-        self._uart.write([66, 77, 226, 0, 0, 1, 113])
-        self._buffer = self._uart.read(32)
+        self._uart.write([0x42, 0x4d, 0xe2, 0x00, 0x00, 0x01, 0x71])
+        b = self._uart.read(32)
+        if (len(b) == 32) and (b[0] == 0x42) and (b[1] == 0x4d):
+            self._buffer = b
+        elif len(b) <= 8: # Response to mode change or not ready after mode change, try again
+            time.sleep(0.1)
+            self._uart.flushInput()
+            self._uart.write([0x42, 0x4d, 0xe2, 0x00, 0x00, 0x01, 0x71])
+            b = self._uart.read(32)
+            if (len(b) == 32) and (b[0] == 0x42) and (b[1] == 0x4d):
+                self._buffer(b)
+            else:
+                raise RuntimeError("Unable to read from PM2.5 (incomplete frame)")
