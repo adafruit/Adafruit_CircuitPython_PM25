@@ -179,11 +179,13 @@ class PM25_UART(PM25):
                 time.sleep(0.1)
             else:
                 raise RuntimeError(
-                    "Error configuring PM2.5 sensor for active reading, checksum failure on mode change response"
+                    "Error configuring PM2.5 sensor for active reading, \
+                    checksum failure on mode change response"
                 )
         else:
             raise RuntimeError(
-                "Error configuring PM2.5 sensor for active reading, malformed mode change response"
+                "Error configuring PM2.5 sensor for active reading, \
+                malformed mode change response"
             )
         super().__init__()
 
@@ -236,11 +238,13 @@ class PM25_UART_PASSIVE(PM25):
                 time.sleep(0.1)
             else:
                 raise RuntimeError(
-                    "Error configuring PM2.5 sensor for active reading, checksum failure on mode change response"
+                    "Error configuring PM2.5 sensor for active reading, \
+                    checksum failure on mode change response"
                 )
         else:
             raise RuntimeError(
-                "Error configuring PM2.5 sensor for passive reading, malformed mode change response"
+                "Error configuring PM2.5 sensor for passive reading, \
+                malformed mode change response"
             )
         time.sleep(0.2)
         super().__init__()
