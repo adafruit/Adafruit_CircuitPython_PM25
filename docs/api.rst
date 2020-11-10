@@ -6,3 +6,9 @@
 
 .. automodule:: adafruit_pm25
    :members:
+
+.. automodule:: adafruit_pm25.i2c
+  :members:
+
+.. automodule:: adafruit_pm25.uart
+   :members:
