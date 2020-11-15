@@ -96,7 +96,6 @@ class PM25:
             raise RuntimeError("Invalid PM2.5 checksum")
 
         # unpack data
-        frame = struct.unpack(">HHHHHHHHHHHH", self._buffer[4:28])
         (
             self.aqi_reading["pm10 standard"],
             self.aqi_reading["pm25 standard"],
@@ -110,6 +109,6 @@ class PM25:
             self.aqi_reading["particles 25um"],
             self.aqi_reading["particles 50um"],
             self.aqi_reading["particles 100um"],
-        ) = frame
+        ) = struct.unpack(">HHHHHHHHHHHH", self._buffer[4:28])
 
         return self.aqi_reading
