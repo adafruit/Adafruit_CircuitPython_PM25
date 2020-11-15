@@ -78,4 +78,6 @@ class PM25_UART(PM25):
         if not remain or len(remain) != 31:
             raise RuntimeError("Unable to read from PM2.5 (incomplete frame)")
         self._buffer[1:] = remain
+
+
 #        print([hex(i) for i in self._buffer])
