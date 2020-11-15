@@ -82,7 +82,7 @@ class PM25:
         # print([hex(i) for i in self._buffer])
 
         # check packet header
-        if (self._buffer[0] != 0x42) or (self._buffer[1] != 0x4D):
+        if not self._buffer[0:2] == b'BM':
             raise RuntimeError("Invalid PM2.5 header")
 
         # check frame length
