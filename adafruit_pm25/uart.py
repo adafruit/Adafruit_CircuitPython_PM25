@@ -216,7 +216,7 @@ class PM25_UART(PM25):
                         serial_data.append(ord(second_byte))
                         frame_length_bytes = self._uart.read(2)
                         frame_length = int.from_bytes(frame_length_bytes, "big")
-                        if frame_length in range(0, (MAX_FRAME_SIZE - 4)):
+                        if 0 <= frame_length <= (MAX_FRAME_SIZE - 4):
                             serial_data.extend(frame_length_bytes)
                             data_frame = self._uart.read(frame_length)
                             if len(data_frame) > 0:
