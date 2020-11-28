@@ -196,6 +196,8 @@ class PM25_UART(PM25):
         return cmd_frame
 
     def _read_uart(self):
+        # Disable too-many violations for this method, since it actually needs these branches
+        # pylint: disable=too-many-nested-blocks,too-many-branches
         """
         Reads a single frame via UART
 
