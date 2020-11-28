@@ -38,7 +38,7 @@ Works with most (any?) Plantower UART interfaced PM2.5 sensor.
 Tested with:
 
 * PMS5003 on QT Py M0
-  * On power on, this device defaults to 'active' mode unless a mode reset command is received
+  * On power on, this device defaults to 'active' mode unless a mode change command is received
 
 **Software and Dependencies:**
 
