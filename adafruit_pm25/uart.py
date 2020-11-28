@@ -95,12 +95,14 @@ class PM25_UART(PM25):
 
     def _read_into_buffer(self):
         if self._mode == "passive":
-            read_buffer = self._cmd_passive_read()
+            self._cmd_passive_read()
         self._buffer = self._read_uart()
 
     def _cmd_mode_passive(self):
         """
-        Sends command to device to enable 'passive' mode, where data frames are only sent after a read command
+        Sends command to device to enable 'passive' mode
+
+        In passive mode, data frames are only sent after a read command
         """
         self._uart.reset_input_buffer()
         self._uart.write(self._build_cmd_frame(PLANTOWER_CMD_MODE_PASSIVE))
@@ -111,7 +113,9 @@ class PM25_UART(PM25):
 
     def _cmd_mode_active(self):
         """
-        Sends command to device to enable 'active' mode, where data frames are sent repeatedly every second
+        Sends command to device to enable 'active' mode
+
+        In active mode, data frames are sent repeatedly every second
         """
         self._uart.reset_input_buffer()
         self._uart.write(self._build_cmd_frame(PLANTOWER_CMD_MODE_ACTIVE))
@@ -134,9 +138,9 @@ class PM25_UART(PM25):
         """
         Sends command to wake device from low-power sleep mode via UART
 
-        Wakeup from sleep via command requires about 3 seconds before the device becomes available
+        Device isn't fully available until 3 seconds after wake is received
 
-        Additionally, this command does not trigger a response and behaves more like a reset or pin awake. On command reciept the device pulls TX low until about a second later as it initializes.
+        This command does not trigger a response, so we don't need to pull one off the buffer
         """
         self._uart.reset_input_buffer()
         self._uart.write(self._build_cmd_frame(PLANTOWER_CMD_WAKEUP))
@@ -165,7 +169,7 @@ class PM25_UART(PM25):
         """
         Sleeps device via SET pin, but only if pin has been assigned
         """
-        if self._set_pin is not None and self._set_pin.value == True:
+        if self._set_pin is not None and self._set_pin.value:
             self._set_pin.value = False
 
     def _pin_wakeup(self):
@@ -174,11 +178,12 @@ class PM25_UART(PM25):
 
         Wakeup from sleep via pin takes about 3 seconds before device is available
         """
-        if self._set_pin is not None and self._set_pin.value == False:
+        if self._set_pin is not None and not self._set_pin.value:
             self._set_pin.value = True
             time.sleep(3)
 
-    def _build_cmd_frame(self, cmd_bytes):
+    @staticmethod
+    def _build_cmd_frame(cmd_bytes):
         """
         Builds a valid command frame byte array with checksum for given command bytes
         """
@@ -192,7 +197,9 @@ class PM25_UART(PM25):
 
     def _read_uart(self):
         """
-        Reads a single frame via UART, ignoring bytes that are not frame headers to avoid reading in frames mid-stream
+        Reads a single frame via UART
+
+        Ignores bytes that are not frame headers to avoid reading in frames mid-stream
         """
         error_count = 0
         first_bytes_tried = 0
@@ -207,7 +214,7 @@ class PM25_UART(PM25):
                         serial_data.append(ord(second_byte))
                         frame_length_bytes = self._uart.read(2)
                         frame_length = int.from_bytes(frame_length_bytes, "big")
-                        if frame_length > 0 and frame_length <= (MAX_FRAME_SIZE - 4):
+                        if frame_length in range(0, (MAX_FRAME_SIZE - 4)):
                             serial_data.extend(frame_length_bytes)
                             data_frame = self._uart.read(frame_length)
                             if len(data_frame) > 0:
@@ -215,18 +222,18 @@ class PM25_UART(PM25):
                                 frame_checksum = serial_data[-2:]
                                 checksum = sum(serial_data[:-2]).to_bytes(2, "big")
                                 if frame_checksum != checksum:
-                                    # Invalid checksum, ignore the frame, increment count, and try again
+                                    # Invalid checksum, ignore the frame, try again
                                     error_count += 1
                                 else:
                                     return serial_data
                             else:
-                                # Data frame empty, ignore the frame, increment error count, and try again
+                                # Data frame empty, ignore the frame, try again
                                 error_count += 1
                         else:
-                            # Invalid frame length, ignore the frame, increment error count, and try again
+                            # Invalid frame length, ignore the frame, and try again
                             error_count += 1
                     else:
-                        # Invalid header low bit, ignore the frame, increment error count, and try again
+                        # Invalid header low bit, ignore the frame, and try again
                         error_count += 1
                 else:
                     # First bit isn't a header high bit, ignore and retry until we get a header bit
@@ -237,6 +244,7 @@ class PM25_UART(PM25):
 
             if error_count >= UART_RETRY_COUNT:
                 raise RuntimeError("Frame error count exceded retry threshold")
-            elif first_bytes_tried > MAX_FRAME_SIZE:
-                # If we haven't found a frame header in more than MAX_FRAME_SIZE bytes then increment error count and try again
+
+            if first_bytes_tried > MAX_FRAME_SIZE:
+                # If we haven't found a frame header then increment count and try again
                 error_count += 1
