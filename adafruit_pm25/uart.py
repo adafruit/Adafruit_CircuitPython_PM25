@@ -68,7 +68,7 @@ class PM25_UART(PM25):
     A driver for the PM2.5 Air quality sensor over UART
     """
 
-    def __init__(self, uart, set_pin=None, reset_pin=None, mode="passive"):
+    def __init__(self, uart, reset_pin=None, set_pin=None, mode="passive"):
         self._uart = uart
         self._reset_pin = reset_pin
         self._set_pin = set_pin
