@@ -59,7 +59,8 @@ PLANTOWER_CMD_READ = b"\xE2\x00\x00"
 PLANTOWER_CMD_SLEEP = b"\xE4\x00\x00"
 PLANTOWER_CMD_WAKEUP = b"\xE4\x00\x01"
 
-UART_RETRY_COUNT = 3
+UART_RETRY_COUNT = 5
+FRAME_RETRY_COUNT = 3
 MAX_FRAME_SIZE = 32
 
 
@@ -203,6 +204,7 @@ class PM25_UART(PM25):
 
         Ignores bytes that are not frame headers to avoid reading in frames mid-stream
         """
+        uart_timeouts = 0
         error_count = 0
         first_bytes_tried = 0
         while True:
@@ -241,11 +243,14 @@ class PM25_UART(PM25):
                     # First bit isn't a header high bit, ignore and retry until we get a header bit
                     first_bytes_tried += 1
             else:
-                # If we didn't get a byte during our read, that's fine, just move on
-                pass
+                # If we didn't get a byte during our read, increment timeouts and move on
+                uart_timeouts += 1
 
-            if error_count >= UART_RETRY_COUNT:
+            if error_count >= FRAME_RETRY_COUNT:
                 raise RuntimeError("Frame error count exceded retry threshold")
+
+            if uart_timeouts >= UART_RETRY_COUNT:
+                raise RuntimeError("Unable to read from PM2.5")
 
             if first_bytes_tried > MAX_FRAME_SIZE:
                 # If we haven't found a frame header then increment count and try again
