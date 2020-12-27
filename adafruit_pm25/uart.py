@@ -99,7 +99,7 @@ class PM25_UART(PM25):
             self._cmd_passive_read()
         self._buffer = self._read_uart()
 
-    def _cmd_mode_passive(self):
+    def cmd_mode_passive(self):
         """
         Sends command to device to enable 'passive' mode
 
@@ -112,7 +112,7 @@ class PM25_UART(PM25):
         time.sleep(1)
         return cmd_response
 
-    def _cmd_mode_active(self):
+    def cmd_mode_active(self):
         """
         Sends command to device to enable 'active' mode
 
@@ -131,7 +131,7 @@ class PM25_UART(PM25):
         time.sleep(1)
         return cmd_response
 
-    def _cmd_sleep(self):
+    def cmd_sleep(self):
         """
         Sends command to put device into low-power sleep mode via UART
         """
@@ -141,7 +141,7 @@ class PM25_UART(PM25):
         time.sleep(1)
         return cmd_response
 
-    def _cmd_wakeup(self):
+    def cmd_wakeup(self):
         """
         Sends command to wake device from low-power sleep mode via UART
 
@@ -153,14 +153,14 @@ class PM25_UART(PM25):
         self._uart.write(self._build_cmd_frame(PLANTOWER_CMD_WAKEUP))
         time.sleep(3)
 
-    def _cmd_passive_read(self):
+    def cmd_passive_read(self):
         """
         Sends command to request a data frame whlie in 'passive' mode and immediately reads in frame
         """
         self._uart.reset_input_buffer()
         self._uart.write(self._build_cmd_frame(PLANTOWER_CMD_READ))
 
-    def _pin_reset(self):
+    def pin_reset(self):
         """
         Resets device via RESET pin, but only if pin has been assigned
 
@@ -172,14 +172,14 @@ class PM25_UART(PM25):
             self._reset_pin.value = True
             time.sleep(3)
 
-    def _pin_sleep(self):
+    def pin_sleep(self):
         """
         Sleeps device via SET pin, but only if pin has been assigned
         """
         if self._set_pin is not None and self._set_pin.value:
             self._set_pin.value = False
 
-    def _pin_wakeup(self):
+    def pin_wakeup(self):
         """
         Wakes device via SET pin, but only if pin has been assigned
 
