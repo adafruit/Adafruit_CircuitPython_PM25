@@ -116,7 +116,13 @@ class PM25_UART(PM25):
         """
         Sends command to device to enable 'active' mode
 
-        In active mode, data frames are sent repeatedly every second
+        In active mode, data frames are sent repeatedly with an interval between 200 and 2300ms.
+
+        Timeframe between data frames will vary depending on the sensor's "sub-mode", which changes
+        in response to variations between reads.
+
+        Stable readings can extend timeframes up to 2300ms while rapid change may shorten timeframes
+        to a range as high as 800ms or as low as 200ms.
         """
         self._uart.reset_input_buffer()
         self._uart.write(self._build_cmd_frame(PLANTOWER_CMD_MODE_ACTIVE))
