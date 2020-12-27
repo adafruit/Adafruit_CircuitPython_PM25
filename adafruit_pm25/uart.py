@@ -78,7 +78,7 @@ class PM25_UART(PM25):
         if reset_pin:
             # Reset device on init, for good measure
             self._reset_pin.direction = Direction.OUTPUT
-            self._pin_reset()
+            self.pin_reset()
 
         if set_pin:
             # Pull set pin high to 'working' status (pulling low puts device to sleep)
@@ -86,9 +86,9 @@ class PM25_UART(PM25):
             self._set_pin.value = True
 
         if self._mode == "passive":
-            self._cmd_mode_passive()
+            self.cmd_mode_passive()
         elif self._mode == "active":
-            self._cmd_mode_active()
+            self.cmd_mode_active()
         else:
             raise RuntimeError("Invalid mode")
 
@@ -96,7 +96,7 @@ class PM25_UART(PM25):
 
     def _read_into_buffer(self):
         if self._mode == "passive":
-            self._cmd_passive_read()
+            self.cmd_passive_read()
         self._buffer = self._read_uart()
 
     def cmd_mode_passive(self):
