@@ -171,6 +171,8 @@ class PM25_UART(PM25):
             time.sleep(0.01)
             self._reset_pin.value = True
             time.sleep(3)
+            if self._mode == "passive":
+                self.cmd_mode_passive()
 
     def pin_sleep(self):
         """
