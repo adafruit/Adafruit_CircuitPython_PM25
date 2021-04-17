@@ -18,6 +18,15 @@ Implementation Notes
 
 Works with most (any?) Plantower UART or I2C interfaced PM2.5 sensor.
 
+* `PM2.5 Air Quality Sensor and Breadboard Adapter Kit - PMS5003
+  <https://www.adafruit.com/product/3686>`_
+
+* `PM2.5 Air Quality Sensor with I2C Interface - PMSA003I
+  <https://www.adafruit.com/product/4505>`_
+
+* `Adafruit PMSA003I Air Quality Breakout
+  <https://www.adafruit.com/product/4632>`_
+
 **Software and Dependencies:**
 
 * Adafruit CircuitPython firmware for the supported boards:
@@ -33,8 +42,13 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_PM25.git"
 
 
 class PM25:
-    """Super-class for generic PM2.5 sensors. Subclasses must implement
-    _read_into_buffer to fill self._buffer with a packet of data"""
+    """
+    Super-class for generic PM2.5 sensors.
+
+    .. note::
+        Subclasses must implement _read_into_buffer to fill self._buffer with a packet of data
+
+    """
 
     def __init__(self):
         # rad, ok make our internal buffer!
