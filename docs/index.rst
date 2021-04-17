@@ -26,6 +26,12 @@ Table of Contents
 .. toctree::
     :caption: Related Products
 
+    PM2.5 Air Quality Sensor with I2C Interface - PMSA003I <https://www.adafruit.com/product/4505>
+
+    Adafruit PMSA003I Air Quality Breakout <https://www.adafruit.com/product/4632>
+
+    PM2.5 Air Quality Sensor and Breadboard Adapter Kit - PMS5003 <https://www.adafruit.com/product/3686>
+
 .. toctree::
     :caption: Other Links
 
