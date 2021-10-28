@@ -30,8 +30,15 @@ Works with most (any?) Plantower UART or I2C interfaced PM2.5 sensor.
 """
 
 import time
-from digitalio import Direction
+from digitalio import Direction, DigitalInOut
 from . import PM25
+
+try:
+    # Used only for typing
+    import typing  # pylint: disable=unused-import
+    from busio import UART
+except ImportError:
+    pass
 
 
 class PM25_UART(PM25):
@@ -73,7 +80,7 @@ class PM25_UART(PM25):
 
     """
 
-    def __init__(self, uart, reset_pin=None):
+    def __init__(self, uart: UART, reset_pin: DigitalInOut = None):
         if reset_pin:
             # Reset device
             reset_pin.direction = Direction.OUTPUT
@@ -86,7 +93,7 @@ class PM25_UART(PM25):
         self._uart = uart
         super().__init__()
 
-    def _read_into_buffer(self):
+    def _read_into_buffer(self) -> None:
         while True:
             b = self._uart.read(1)
             if not b:
