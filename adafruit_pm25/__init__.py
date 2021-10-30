@@ -50,7 +50,7 @@ class PM25:
 
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         # rad, ok make our internal buffer!
         self._buffer = bytearray(32)
         self.aqi_reading = {
@@ -68,11 +68,11 @@ class PM25:
             "particles 100um": None,
         }
 
-    def _read_into_buffer(self):
+    def _read_into_buffer(self) -> None:
         """Low level buffer filling function, to be overridden"""
         raise NotImplementedError()
 
-    def read(self):
+    def read(self) -> dict:
         """Read any available data from the air quality sensor and
         return a dictionary with available particulate/quality data"""
         self._read_into_buffer()
