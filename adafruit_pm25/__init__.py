@@ -74,7 +74,13 @@ class PM25:
 
     def read(self) -> dict:
         """Read any available data from the air quality sensor and
-        return a dictionary with available particulate/quality data"""
+        return a dictionary with available particulate/quality data
+
+        Note that "standard" concentrations are those when corrected to
+        standard atmospheric conditions (288.15 K, 1013.25 hPa), and
+        "environmental" concentrations are those measure in the current
+        atmospheric conditions.
+        """
         self._read_into_buffer()
         # print([hex(i) for i in self._buffer])
 
