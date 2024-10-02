@@ -13,8 +13,8 @@ from adafruit_pm25.i2c import PM25_I2C
 i2c = board.I2C()  # uses board.SCL and board.SDA
 # i2c = board.STEMMA_I2C()  # For using the built-in STEMMA QT connector
 pm25 = PM25_I2C(i2c, reset_pin=None)
- 
- 
+
+
 # Example written for boards with built-in displays
 display = board.DISPLAY
 
@@ -43,9 +43,9 @@ while True:
         continue
     # Update the label.text property to change the text on the display
     # show some of the values returned by the sensor read, one per line
-    display_output_label.text = f"PM 1.0: {aqdata["pm10 standard"]} \
-        \nPM 2.5: {aqdata["pm25 standard"]} \
-        \n1.0um / 0.1L: {aqdata["particles 10um"]} \
-        \n2.5um / 0.1L: {aqdata["particles 25um"]} "
+    display_output_label.text = f"PM 1.0: { aqdata['pm10 standard'] } \
+        \nPM 2.5: { aqdata['pm25 standard']} \
+        \n1.0um / 0.1L: { aqdata['particles 10um'] } \
+        \n2.5um / 0.1L: { aqdata['particles 25um'] }"
     # Wait a bit between reads
     time.sleep(1)
