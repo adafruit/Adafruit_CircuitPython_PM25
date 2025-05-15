@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 import time
+
 import board
 from adafruit_display_text.bitmap_label import Label
 from displayio import Group
