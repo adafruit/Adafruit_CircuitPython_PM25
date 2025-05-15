@@ -30,12 +30,15 @@ Works with most (any?) Plantower UART or I2C interfaced PM2.5 sensor.
 """
 
 import time
-from digitalio import Direction, DigitalInOut
+
+from digitalio import DigitalInOut, Direction
+
 from . import PM25
 
 try:
     # Used only for typing
-    import typing  # pylint: disable=unused-import
+    import typing
+
     from busio import UART
 except ImportError:
     pass

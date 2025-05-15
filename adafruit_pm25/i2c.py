@@ -35,13 +35,16 @@ Works with most (any?) Plantower I2C interfaced PM2.5 sensor.
 
 # imports
 import time
-from digitalio import Direction, DigitalInOut
+
 from adafruit_bus_device.i2c_device import I2CDevice
+from digitalio import DigitalInOut, Direction
+
 from . import PM25
 
 try:
     # Used only for typing
-    import typing  # pylint: disable=unused-import
+    import typing
+
     from busio import I2C
 except ImportError:
     pass
@@ -84,9 +87,7 @@ class PM25_I2C(PM25):
 
     """
 
-    def __init__(
-        self, i2c_bus: I2C, reset_pin: DigitalInOut = None, address: int = 0x12
-    ) -> None:
+    def __init__(self, i2c_bus: I2C, reset_pin: DigitalInOut = None, address: int = 0x12) -> None:
         if reset_pin:
             # Reset device
             reset_pin.direction = Direction.OUTPUT
