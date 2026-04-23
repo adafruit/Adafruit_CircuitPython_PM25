@@ -44,9 +44,9 @@ while True:
         continue
     # Update the label.text property to change the text on the display
     # show some of the values returned by the sensor read, one per line
-    display_output_label.text = f"PM 1.0: { aqdata['pm10 standard'] } \
-        \nPM 2.5: { aqdata['pm25 standard']} \
-        \n1.0um / 0.1L: { aqdata['particles 10um'] } \
-        \n2.5um / 0.1L: { aqdata['particles 25um'] }"
+    display_output_label.text = f"PM 1.0: {aqdata['pm10 standard']} \
+        \nPM 2.5: {aqdata['pm25 standard']} \
+        \n1.0um / 0.1L: {aqdata['particles 10um']} \
+        \n2.5um / 0.1L: {aqdata['particles 25um']}"
     # Wait a bit between reads
     time.sleep(1)

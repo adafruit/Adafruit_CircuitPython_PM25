@@ -61,14 +61,16 @@ while True:
     print("Concentration Units (standard)")
     print("---------------------------------------")
     print(
-        "PM 1.0: %d\tPM2.5: %d\tPM10: %d"
-        % (aqdata["pm10 standard"], aqdata["pm25 standard"], aqdata["pm100 standard"])
+        f"PM 1.0: {aqdata['pm10 standard']}\t"
+        + f"PM2.5: {aqdata['pm25 standard']}\t"
+        + f"PM10: {aqdata['pm100 standard']}"
     )
     print("Concentration Units (environmental)")
     print("---------------------------------------")
     print(
-        "PM 1.0: %d\tPM2.5: %d\tPM10: %d"
-        % (aqdata["pm10 env"], aqdata["pm25 env"], aqdata["pm100 env"])
+        f"PM 1.0: {aqdata['pm10 env']}\t"
+        + f"PM2.5: {aqdata['pm25 env']}\t"
+        + f"PM10: {aqdata['pm100 env']}"
     )
     print("---------------------------------------")
     print("Particles > 0.3um / 0.1L air:", aqdata["particles 03um"])
